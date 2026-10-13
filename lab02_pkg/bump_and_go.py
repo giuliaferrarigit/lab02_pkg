@@ -35,9 +35,7 @@ class bump_and_go(Node):
         self.w_max = self.get_parameter('max_angular_velocity').value
         self.frequency = self.get_parameter('control_frequency').value
         self.threshold = self.get_parameter('threshold').value
-        self.x_goal=self..get_parameter('x_goal').value
-        self.y_goal=self.get_parameter('y_goal').value
-        self.z_goal=self.get_parameter('z_goal').value
+        
         #  invio i comandi di velocità al robot
         self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
@@ -48,6 +46,17 @@ class bump_and_go(Node):
         # Timer: chiama control_loop 'frequency' volte al secondo
         self.create_timer(1.0 / self.frequency, self.control_loop)
 
+        # Internal state variables for tracking robot motion and position
+        self.scan_data = None
+        self.current_yaw = 0.0
+        self.state = 'GO_FORWARD'
+        self.turn_direction = 1  # 1 = left, -1 = right
+        self.position = Point()
+        
+        # Define goal position that robot should navigate to
+        self.goal_pos = Pose()
+        self.goal_pos.position.x = 6.5
+        self.goal_pos.position.y = 3.0
 
 
 
