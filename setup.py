@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'bump_and_go = lab02_pkg.bump_and_go:main'
+               'bump_and_go_FGP = lab02_pkg.bump_and_go_FGP:main',
         ],
     },
 )
