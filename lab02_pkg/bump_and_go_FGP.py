@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import qos_profile_sensor_data
 from geometry_msgs.msg import Twist, Pose, Point
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
@@ -83,7 +84,7 @@ class BumpAndGo(Node):
         self.off_yaw = self.get_parameter('odom_offset_yaw').value
 
         self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.create_subscription(LaserScan, '/scan', self.laser_callback, 10)
+        self.create_subscription(LaserScan, '/scan', self.laser_callback, qos_profile_sensor_data)
         self.create_subscription(Odometry, '/odom', self.odom_callback, 10)
         self.timer = self.create_timer(1.0 / self.control_frequency, self.control_loop)
 
